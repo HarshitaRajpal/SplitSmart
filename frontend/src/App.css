@@ -1,0 +1,549 @@
+/* SplitSmart – base & layout */
+:root {
+  --bg-page: #f8fafc;
+  --header-bg: #fff;
+  --card-bg: #fff;
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --accent: #6366f1;
+  --chart-bar: #6366f1;
+  --border: #e2e8f0;
+  --font: "Outfit", "DM Sans", -apple-system, sans-serif;
+}
+
+[data-theme="dark"] {
+  --bg-page: #0f172a;
+  --header-bg: #1e293b;
+  --card-bg: #1e293b;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --accent: #818cf8;
+  --border: #334155;
+}
+
+[data-theme="ocean"] {
+  --bg-page: #f0f9ff;
+  --card-bg: #fff;
+  --accent: #0ea5e9;
+  --chart-bar: #0ea5e9;
+}
+
+[data-theme="forest"] {
+  --bg-page: #f0fdf4;
+  --card-bg: #fff;
+  --accent: #22c55e;
+  --chart-bar: #22c55e;
+}
+
+[data-theme="sunset"] {
+  --bg-page: #fff7ed;
+  --card-bg: #fff;
+  --accent: #f97316;
+  --chart-bar: #f97316;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg-page);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background 0.35s ease, color 0.25s ease;
+}
+
+.app-layout {
+  min-height: 100vh;
+  background: var(--bg-page);
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 64px;
+  background: var(--header-bg) !important;
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: background 0.35s ease;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  font-size: 1.5rem;
+  color: var(--accent);
+  filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.4));
+}
+
+.logo-text {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-expense-btn {
+  font-weight: 600;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.add-expense-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.45);
+}
+
+.app-content {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.app-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.dashboard {
+  width: 100%;
+}
+
+.main-tabs .ant-tabs-nav {
+  margin-bottom: 20px;
+}
+
+.main-tabs .ant-tabs-tab {
+  font-weight: 500;
+  padding: 10px 16px;
+}
+
+.main-tabs .ant-tabs-ink-bar {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.expenses-card,
+.chart-card {
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.expenses-card:hover,
+.chart-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.expense-list-wrap {
+  border-radius: 12px;
+}
+
+.expense-list-item {
+  transition: background 0.2s ease;
+  border-radius: 10px;
+  padding: 4px 0;
+}
+
+.expense-list-item:hover {
+  background: rgba(99, 102, 241, 0.06);
+}
+
+.expense-title {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.expense-amount {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.expense-list-empty {
+  padding: 24px;
+  text-align: center;
+}
+
+/* New expense list: cards & list view */
+.expense-list-v2 {
+  padding: 0 4px;
+}
+
+.expense-list-toolbar {
+  margin-bottom: 16px;
+}
+
+.expense-list-toolbar .ant-segmented {
+  background: var(--border);
+  padding: 2px;
+  border-radius: 10px;
+}
+
+.expense-date-group {
+  margin-bottom: 24px;
+}
+
+.expense-date-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px 10px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  background: var(--border);
+  opacity: 0.92;
+}
+
+.expense-date-header .date-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.expense-date-header .date-total {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.95rem;
+}
+
+.expense-cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.expense-card-new {
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.expense-card-new:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.expense-card-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  gap: 12px;
+}
+
+.expense-card-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
+
+.expense-card-emoji {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.expense-card-body {
+  min-width: 0;
+}
+
+.expense-card-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.expense-card-meta {
+  margin-top: 4px;
+}
+
+.expense-card-note {
+  display: block;
+  font-size: 0.85rem;
+  max-width: 100%;
+}
+
+.expense-card-tags {
+  margin-top: 4px;
+}
+
+.expense-tag-pill {
+  font-size: 0.75rem;
+  margin: 0;
+  border-radius: 6px;
+}
+
+.expense-card-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.expense-card-amount {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.expense-card-actions .action-btn {
+  opacity: 0.7;
+}
+
+.expense-card-actions .action-btn:hover {
+  opacity: 1;
+}
+
+.expense-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.expense-row-new {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  transition: background 0.2s ease;
+}
+
+.expense-row-new:hover {
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.expense-row-emoji {
+  font-size: 1.25rem;
+  width: 32px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.expense-row-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.expense-row-title {
+  font-weight: 600;
+  color: var(--text);
+  display: block;
+}
+
+.expense-row-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+  flex-wrap: wrap;
+}
+
+.expense-row-meta .tag-pill {
+  font-size: 0.7rem;
+  margin: 0;
+}
+
+.expense-row-amount {
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.expense-row-actions {
+  opacity: 0.8;
+}
+
+.expense-row-actions .ant-btn:hover {
+  opacity: 1;
+}
+
+/* Manage categories modal */
+.manage-categories-add {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.add-category-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.add-category-row .ant-form-item {
+  flex: 1;
+  min-width: 120px;
+}
+
+.add-category-row .ant-form-item[style*="width: 56"] {
+  flex: none;
+  min-width: 56px;
+}
+
+.manage-categories-list .ant-list-item {
+  border-block-end: none;
+  padding: 10px 0;
+}
+
+.category-list-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--bg-page);
+  transition: background 0.2s ease;
+}
+
+.category-list-row:hover {
+  background: var(--border);
+}
+
+.category-emoji {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.category-name {
+  flex: 1;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.category-edit-row {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--bg-page);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.category-edit-row .ant-form-inline .ant-form-item {
+  margin-inline-end: 8px;
+}
+
+/* Category select in forms */
+.category-select-option .category-option-emoji {
+  margin-right: 8px;
+}
+
+.recurring-section .ant-card {
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+
+.recurring-item .ant-list-item {
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.recurring-item .ant-list-item:hover {
+  background: rgba(99, 102, 241, 0.06);
+}
+
+.charts-section {
+  margin-bottom: 24px;
+}
+
+.add-expense-form .ant-form-item {
+  margin-bottom: 16px;
+}
+
+/* Ant overrides for theme */
+.ant-select-selector,
+.ant-picker,
+.ant-input,
+.ant-input-number {
+  border-radius: 10px !important;
+}
+
+.ant-btn {
+  border-radius: 10px;
+  font-weight: 500;
+  transition: transform 0.15s ease;
+}
+
+.ant-btn:active {
+  transform: scale(0.98);
+}
+
+.ant-card-head {
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+
+.ant-empty-description {
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .app-content {
+    padding: 16px;
+  }
+
+  .add-expense-btn span:not(.anticon) {
+    display: none;
+  }
+}
